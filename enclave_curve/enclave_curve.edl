@@ -1,0 +1,83 @@
+enclave {
+
+    include "common/shared.h"
+
+    trusted {
+        public oe_result_t enclave_SetCurveZMQ(
+            int  clientOrServer
+            );
+        public oe_result_t enclave_ExportSealedPrivateKey(
+            [out] sealed_data_t** sealed_prikey,
+            [out] size_t *sealed_prikey_len,
+            [out] uint8_t **pubkey,
+            [out] size_t *pubkey_len
+            );
+        public oe_result_t enclave_ImportSealedPrivateKey(
+            [in, size = sealed_prikey_len] sealed_data_t *sealed_prikey,
+            size_t sealed_prikey_len,
+            [in, size = pubkey_len] uint8_t *pubkey,
+            size_t pubkey_len
+            );
+        public oe_result_t enclave_ImportServerPublicKey(
+            [in, size = pubkey_len] uint8_t *pubkey,
+            size_t pubkey_len
+            );
+        public oe_result_t enclave_ProduceHello(
+            [out] uint8_t **hello_msg,
+            [out] size_t *hello_msg_len
+            );
+        public oe_result_t enclave_ProcessHello(
+            [in, size = hello_msg_len] uint8_t *hello_msg,
+            size_t hello_msg_len
+            );
+        public oe_result_t enclave_ProduceWelcome(
+            [out] uint8_t **welcome_msg,
+            [out] size_t *welcome_msg_len
+            );
+        public oe_result_t enclave_ProcessWelcome(
+            [in, size = welcome_msg_len] uint8_t *welcome_msg,
+            size_t welcome_msg_len
+            );
+        public oe_result_t enclave_ProduceInitiate(
+            [in, size = metadata_length] uint8_t *metadata_plaintext_,
+            size_t metadata_length,
+            [out] uint8_t **initiate_msg,
+            [out] size_t *initiate_msg_len
+            );
+        public oe_result_t enclave_ProcessInitiate(
+            [in, size = initiate_msg_len] uint8_t *initiate_msg,
+            size_t initiate_msg_len,
+            [out] uint8_t **metadata_plaintext,
+            [out] size_t *metadata_length
+            );
+        public oe_result_t enclave_ProduceReady(
+            [in, size = metadata_length] uint8_t *metadata_,
+            size_t metadata_length,
+            [out] uint8_t **ready_msg,
+            [out] size_t *ready_msg_len
+            );
+        public oe_result_t enclave_ProcessReady(
+            [in, size = ready_msg_len] uint8_t *ready_msg,
+            size_t ready_msg_len,
+            [out] uint8_t **metadata_,
+            [out] size_t *metadata_length
+            );
+        public oe_result_t enclave_ProduceMessage(
+            [in, size = msg_len] uint8_t *msg,
+            size_t msg_len,
+            [out] uint8_t **enc_msg,
+            [out] size_t *enc_msg_len
+            );
+        public oe_result_t enclave_ProcessMessage(
+            [in, size = enc_msg_len] uint8_t *enc_msg,
+            size_t enc_msg_len,
+            [out] uint8_t **msg,
+            [out] size_t *msg_len
+            );
+    };
+
+    //untrusted {
+    //    no untrusted functions in this sample
+    //};
+};
+

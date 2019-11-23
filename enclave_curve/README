@@ -1,0 +1,39 @@
+本代码是《EnclaveZMQ：基于SGX实现ZMQ的安全通信》中方案的代码实现。
+
+1、源代码说明： 
+
+./Makefile              编译脚本
+./enclave_zmq.edl       安全区定义语言EDL
+Host端代码
+./host
+./host/Makefile
+./host/host.cpp         创建 两个Enclave， Server和Client，进行握手协议和数据协议的交互测试
+
+./common/shared.h       密钥封装格式
+
+Enclave端代码
+./enclave/common.h
+./enclave/ecalls.cpp            调用封装代码
+./enclave/enclave_zmq_t.h
+./enclave/enclave_zmq_args.h
+./enclave/enclave_zmq_t.c
+./enclave/dispatcher.h          密钥封装和解封代码
+./enclave/dispatcher.cpp
+./enclave/keys.cpp
+./enclave/curve_server.cpp      CurveZMQ服务端处理代码（密钥、协议等实现）
+./enclave/curve_server.h
+./enclave/curve_client.cpp      CurveZMQ客户端处理代码（密钥、协议等实现）
+./enclave/curve_client.h
+./enclave/tweetnacl.c           Curve25519和XScala20算法实现
+./enclave/tweetnacl.h
+./enclave/Makefile
+./enclave/enclave_zmq.conf      Enclave配置文件
+
+2、源代码编译： 
+在sgx_zmq目录下执行
+make
+
+3、代码运行
+在sgx_zmq目录下执行
+make run
+

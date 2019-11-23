@@ -1,0 +1,35 @@
+开发环境：Ubuntu 18.04.3， OpenEnclave 0.7
+
+(1) enclave_curve 实现sgx环境下的zmq_curve协议
+编译方法：
+make
+make run_genkey
+cp *.bin enclave/enclave_curve.signed ../enclave_zmq_test
+cp host/enclave_curve_u.h host/enclave_curve_u.c host/enclave_curve_args.h ../enclave-libzmq-4.3.2
+
+(2) enclave-libzmq-4.3.2
+在libzmq-4.3.2版本基础上加入对SGX Enclave的支持，enclave_curve中的host部分代码
+编译方法：
+在enclave-libzmq-4.3.2目录下
+mkdir my_build
+cd my_build
+cmake ..
+make
+cp lib/libzmq.a ../../enclave_zmq_test
+
+
+(3) enclave_zmq_test
+实现 zmq server和client之间的通信
+zmq_server.c zmq_client.c  是明文通信的例子
+zmq_curve_server.c zmq_curve_client.c 演示使用enclave保护的通信
+
+zmq.pcap            明文通信数据包
+enclave_zmq.pcap    基于enclave实现的zmq-curve协议抓包
+运行方法：
+make 编译
+
+打开两个终端，分别运行服务端和客户端程序
+终端1：
+./zmq_curve_server
+终端2:
+./zmq_curve_client
